@@ -1,5 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header/Header';
+import Products from './components/Product/Product';
+ 
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
           Learn React
         </a>
       </header>
+      <Header/>
+      <Products/>
     </div>
   );
 }

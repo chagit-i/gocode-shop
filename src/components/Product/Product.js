@@ -1,4 +1,6 @@
-const ProductCard = () => (
+import './Product.css';
+function Product (){
+  return (
     <div className="product-card">
         <div className="product-image">
           <img
@@ -11,3 +13,6 @@ const ProductCard = () => (
         </div>
       </div>
   );
+ }
+ export default Product;
+ 
