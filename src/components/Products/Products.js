@@ -1,11 +1,9 @@
-import "./Products.css";
-//p//
-import Product from "../Product/Product"; 
+import './Products.css';
+import Product from '../Product/Product'; 
 
 function Products(){
     return(
         <section className="products">
-              
         <Product/>
         <Product/>
         <Product/>
@@ -16,9 +14,7 @@ function Products(){
         <Product/>
         <Product/>
         <Product/>
-       </section>
-     
-     
+       </section> 
    );  
 }
 export default Products;
