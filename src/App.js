@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Products from './components/Products/Products';
 import HideAndShow from './components/HideAndShow/HideAndShow';
+import { useState } from 'react/cjs/react.development';
  
 
 function App() {
@@ -247,27 +248,21 @@ function App() {
         "count": 145
       }
     }
-  ]
+  ];
+  const categories=listOfProducts.map(p => p.category).filter((value, index, array) => array.indexOf(value)===index);
+  const [Filteredcategory,SetfilteredCategory]= useState(listOfProducts);
+  const filterCategory=(category)=>{SetfilteredCategory(listOfProducts.filter((product)=>product.category===category))};
+   
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <HideAndShow/>
-      <Header/>
-      {/* <Products/> */}
-      <Products List={listOfProducts}/>
+     
+     
+      {/* <HideAndShow/>  */}
+      
+      <Header ListOfCategories={categories} filterTheCategory={filterCategory}/>
+      <Products List={Filteredcategory}/>
+
+      
     </div>
   );
 }
