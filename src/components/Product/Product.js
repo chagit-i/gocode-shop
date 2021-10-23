@@ -5,6 +5,35 @@ import { useContext } from "react";
 function Product({ id, title, price, description, category, image, rating }) {
   const [cartList, setCartList] = useContext(myContext);
 
+  const add = () => {
+    let found = cartList.find(function (element) {
+      return element.id === id;
+    });
+    if (found === undefined) {
+      setCartList([{ id: id, amount: 1, image: image }, ...cartList]);
+    } else {
+      let commentIndex = cartList.findIndex(function (c) {
+        return c.id === id;
+      });
+      cartList[commentIndex].amount++;
+      setCartList([...cartList]);
+    }
+  };
+
+  const remove = () => {
+    let commentIndex = cartList.findIndex(function (c) {
+      return c.id === id;
+    });
+    if (commentIndex !== undefined) {
+      if (cartList[commentIndex].amount > 1) {
+        cartList[commentIndex].amount--;
+        setCartList([...cartList]);
+      } else {
+        cartList.splice(commentIndex, 1);
+        setCartList([...cartList]);
+      }
+    }
+  };
   return (
     <div className="product-card">
       <div className="product-image">
@@ -22,29 +51,18 @@ function Product({ id, title, price, description, category, image, rating }) {
         <br /> count:{rating.count} */}
         <br />
       </div>
-      <div className="add-romove-to-cart">
+      <div className="add-remove-to-cart">
         <button
           onClick={() => {
-            setCartList([
-              {
-                id: id,
-                title: title,
-                price: price,
-                description: description,
-                category: category,
-                image: image,
-                rating: rating,
-              },
-              ...cartList,
-            ]);
+            add();
           }}
         >
           +
         </button>
 
         <button
-          onClick={(id) => {
-            setCartList(cartList.filter((product) => product.id === id));
+          onClick={() => {
+            remove();
           }}
         >
           -

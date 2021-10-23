@@ -1,10 +1,11 @@
-function CartProduct({ id, image }) {
+import "./CartProduct.css";
+function CartProduct({ id, amount, image }) {
   return (
-    <div>
-      MyCart
+    <div class="CartProduct-image">
       <br />
-      {id}
-      {image}
+      id : {id}
+      amount : {amount}
+      <img src={image}></img>
     </div>
   );
 }

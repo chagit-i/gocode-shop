@@ -5,8 +5,14 @@ function CartProducts() {
   const [cartList, setCartList] = useContext(MyContext);
   return (
     <div>
+      MyCart
       {cartList.map((product) => (
-        <CartProduct key={product.id} id={product.id} image={product.image} />
+        <CartProduct
+          key={product.id}
+          id={product.id}
+          amount={product.amount}
+          image={product.image}
+        />
       ))}
     </div>
   );
