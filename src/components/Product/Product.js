@@ -10,7 +10,10 @@ function Product({ id, title, price, description, category, image, rating }) {
       return element.id === id;
     });
     if (found === undefined) {
-      setCartList([{ id: id, amount: 1, image: image }, ...cartList]);
+      setCartList([
+        { id: id, amount: 1, image: image, price: price },
+        ...cartList,
+      ]);
     } else {
       let commentIndex = cartList.findIndex(function (c) {
         return c.id === id;
