@@ -2,8 +2,11 @@ import "./Products.css";
 import Product from "../Product/Product";
 import React from "react";
 import Header from "../Header/Header";
+import { useContext } from "react";
+import myContext from "../MyContext/MyContext";
+import { List } from "@mui/material";
 
-function Products({ List, addToCart, setAddToCart }) {
+function Products({ List }) {
   return (
     <section className="products">
       {/* //     <Product/>

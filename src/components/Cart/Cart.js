@@ -14,11 +14,6 @@ function Cart() {
       MyCart
       {cartList.length > 0 && (
         <div>
-          {/* {cartList.map((item) => (
-                <div key={item.id}>
-                  <span>title:{item.title}</span>
-                </div>
-              ))} */}
           <CartProducts />
           <div>totalPrice: {getSum()}</div>
         </div>

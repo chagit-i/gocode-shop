@@ -9,9 +9,13 @@ import { useEffect } from "react";
 import Cart from "./components/Cart/Cart";
 import CartProducts from "./components/CartProducts/CartProducts";
 import MyContext from "./components/MyContext/MyContext";
+import TemporaryDrawer from "./components/TemporaryDrawer/TemporaryDrawer";
 
 function App() {
   const [listOfProducts, setlistOfProducts] = useState([]);
+  const [cartList, setCartList] = useState([]);
+  const [Filteredcategory, SetfilteredCategory] = useState(listOfProducts);
+  const [filterCategoryPrice, setfilterCategoryPrice] = useState([6, 1000]);
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => {
@@ -20,18 +24,28 @@ function App() {
       .then((listOfProducts) => {
         setlistOfProducts(listOfProducts);
         SetfilteredCategory(listOfProducts);
+        setfilterCategoryPrice(listOfProducts);
       });
   }, []);
   const categories = listOfProducts
     .map((p) => p.category)
     .filter((value, index, array) => array.indexOf(value) === index);
-  const [Filteredcategory, SetfilteredCategory] = useState(listOfProducts);
+
   const filterCategory = (category) => {
     SetfilteredCategory(
       listOfProducts.filter((product) => product.category === category)
     );
+    setfilterCategoryPrice(
+      listOfProducts.filter((product) => product.category === category)
+    );
   };
-  const [cartList, setCartList] = useState([]);
+  const filterPrice = (price) => {
+    setfilterCategoryPrice(
+      Filteredcategory.filter(
+        (product) => product.price >= price[0] && product.price <= price[1]
+      )
+    );
+  };
 
   return (
     <MyContext.Provider value={[cartList, setCartList]}>
@@ -41,12 +55,12 @@ function App() {
         <Header
           ListOfCategories={categories}
           filterTheCategory={filterCategory}
+          filterPrice={filterPrice}
         />
-        <Cart />
-        <Products List={Filteredcategory} />
+        <TemporaryDrawer />
+        <Products List={filterCategoryPrice} />
       </div>
     </MyContext.Provider>
   );
 }
-
 export default App;

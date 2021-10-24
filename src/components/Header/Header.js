@@ -1,12 +1,16 @@
 import { useState } from "react/cjs/react.development";
 import Product from "../Product/Product";
 import "./Header.css";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import RangeSlider from "../RangeSlider/RangeSlider";
 
-function Header({ ListOfCategories, filterTheCategory }) {
+function Header({ ListOfCategories, filterTheCategory, filterPrice }) {
   return (
     <nav className="product-filter">
       <h1>Jackets</h1>
-
+      <RangeSlider filterPrice={filterPrice} />
       <div className="sort">
         <div className="collection-sort">
           <label>Filter by:</label>
@@ -21,7 +25,15 @@ function Header({ ListOfCategories, filterTheCategory }) {
             ))}
           </select>
         </div>
-
+        {/* <Box sx={{ width: 100 }}>
+          <Slider
+            getAriaLabel={() => "Filter By Price"}
+            value={value}
+            onChange={handleChange}
+            valueLabelDisplay="auto"
+            getAriaValueText={valuetext}
+          />
+        </Box> */}
         <div className="collection-sort">
           <label>Sort by:</label>
           <select>
