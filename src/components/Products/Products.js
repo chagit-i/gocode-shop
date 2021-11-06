@@ -6,7 +6,7 @@ import { useContext } from "react";
 import myContext from "../MyContext/MyContext";
 import { List } from "@mui/material";
 
-function Products({ List }) {
+function Products({ addToCartFunc, List }) {
   return (
     <section className="products">
       {/* //     <Product/>
@@ -30,6 +30,7 @@ function Products({ List }) {
           category={product.category}
           image={product.image}
           rating={product.rating}
+          addToCartFunc={addToCartFunc}
         />
       ))}
     </section>

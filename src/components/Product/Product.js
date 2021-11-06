@@ -2,26 +2,36 @@ import { useState } from "react";
 import "./Product.css";
 import myContext from "../MyContext/MyContext";
 import { useContext } from "react";
-function Product({ id, title, price, description, category, image, rating }) {
+import { Link } from "react-router-dom";
+function Product({
+  id,
+  title,
+  price,
+  description,
+  category,
+  image,
+  rating,
+  addToCartFunc,
+}) {
   const [cartList, setCartList] = useContext(myContext);
 
-  const add = () => {
-    let found = cartList.find(function (element) {
-      return element.id === id;
-    });
-    if (found === undefined) {
-      setCartList([
-        { id: id, amount: 1, image: image, price: price },
-        ...cartList,
-      ]);
-    } else {
-      let commentIndex = cartList.findIndex(function (c) {
-        return c.id === id;
-      });
-      cartList[commentIndex].amount++;
-      setCartList([...cartList]);
-    }
-  };
+  // const add = () => {
+  //   let found = cartList.find(function (element) {
+  //     return element.id === id;
+  //   });
+  //   if (found === undefined) {
+  //     setCartList([
+  //       { id: id, amount: 1, image: image, price: price },
+  //       ...cartList,
+  //     ]);
+  //   } else {
+  //     let commentIndex = cartList.findIndex(function (c) {
+  //       return c.id === id;
+  //     });
+  //     cartList[commentIndex].amount++;
+  //     setCartList([...cartList]);
+  //   }
+  // };
 
   const remove = () => {
     let commentIndex = cartList.findIndex(function (c) {
@@ -57,7 +67,7 @@ function Product({ id, title, price, description, category, image, rating }) {
       <div className="add-remove-to-cart">
         <button
           onClick={() => {
-            add();
+            addToCartFunc(id, image, price);
           }}
         >
           +
@@ -71,6 +81,7 @@ function Product({ id, title, price, description, category, image, rating }) {
           -
         </button>
       </div>
+      <Link to={`/products/${id}`}>Product Details</Link>
     </div>
   );
 }

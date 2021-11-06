@@ -1,66 +1,61 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Header from "./components/Header/Header";
-import Products from "./components/Products/Products";
-import Product from "./components/Product/Product";
-import HideAndShow from "./components/HideAndShow/HideAndShow";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 import { useEffect } from "react";
-import Cart from "./components/Cart/Cart";
-import CartProducts from "./components/CartProducts/CartProducts";
 import MyContext from "./components/MyContext/MyContext";
-import TemporaryDrawer from "./components/TemporaryDrawer/TemporaryDrawer";
+import React from "react";
 
+import Home from "./views/Home";
+import ProductDetails from "./views/ProductDetails";
 function App() {
-  const [listOfProducts, setlistOfProducts] = useState([]);
   const [cartList, setCartList] = useState([]);
-  const [Filteredcategory, SetfilteredCategory] = useState(listOfProducts);
-  const [filterCategoryPrice, setfilterCategoryPrice] = useState([6, 1000]);
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => {
-        return res.json();
-      })
-      .then((listOfProducts) => {
-        setlistOfProducts(listOfProducts);
-        SetfilteredCategory(listOfProducts);
-        setfilterCategoryPrice(listOfProducts);
+  const add = (id, image, price) => {
+    let found = cartList.find(function (element) {
+      return element.id === id;
+    });
+    if (found === undefined) {
+      setCartList([
+        { id: id, amount: 1, image: image, price: price },
+        ...cartList,
+      ]);
+    } else {
+      let commentIndex = cartList.findIndex(function (c) {
+        return c.id === id;
       });
-  }, []);
-  const categories = listOfProducts
-    .map((p) => p.category)
-    .filter((value, index, array) => array.indexOf(value) === index);
-
-  const filterCategory = (category) => {
-    SetfilteredCategory(
-      listOfProducts.filter((product) => product.category === category)
-    );
-    setfilterCategoryPrice(
-      listOfProducts.filter((product) => product.category === category)
-    );
+      cartList[commentIndex].amount++;
+      setCartList([...cartList]);
+    }
   };
-  const filterPrice = (price) => {
-    setfilterCategoryPrice(
-      Filteredcategory.filter(
-        (product) => product.price >= price[0] && product.price <= price[1]
-      )
-    );
-  };
-
   return (
-    <MyContext.Provider value={[cartList, setCartList]}>
-      <div className="App">
-        {/* <HideAndShow/>  */}
+    <Router>
+      <MyContext.Provider value={[cartList, setCartList]}>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            {/* <li>
+            <Link to="/productDetails">ProductDetails</Link>
+          </li> */}
+          </ul>
+        </nav>
+        <Switch>
+          <Route path="/products/:id">
+            <ProductDetails addToCartFunc={add} />
+          </Route>
 
-        <Header
-          ListOfCategories={categories}
-          filterTheCategory={filterCategory}
-          filterPrice={filterPrice}
-        />
-        <TemporaryDrawer />
-        <Products List={filterCategoryPrice} />
-      </div>
-    </MyContext.Provider>
+          <Route path="/">
+            <Home addToCartFunc={add} />
+          </Route>
+        </Switch>
+      </MyContext.Provider>
+    </Router>
   );
 }
 export default App;
