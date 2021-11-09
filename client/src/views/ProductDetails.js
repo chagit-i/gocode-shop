@@ -5,7 +5,7 @@ function ProductDetails({ addToCartFunc }) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`/api/products/${id}`)
       .then((res) => res.json())
       .then((product) => {
         setProduct(product);
@@ -16,12 +16,14 @@ function ProductDetails({ addToCartFunc }) {
       <div>{product?.description}</div>
       <button
         onClick={() => {
-          addToCartFunc(product?.id, product?.image, product?.price);
+          addToCartFunc(product?._id, product?.image, product?.price);
         }}
       >
         add to cart
       </button>
-      <img src={product?.image}></img>
+      <div class="ProductDetails-image">
+        <img src={product?.image}></img>
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ function Home({ addToCartFunc }) {
   const [filterCategoryPrice, setfilterCategoryPrice] = useState([6, 1000]);
   const [cartList, setCartList] = useContext(MyContext);
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("/api/products")
       .then((res) => {
         return res.json();
       })

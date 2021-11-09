@@ -22,8 +22,8 @@ function Products({ addToCartFunc, List }) {
 
       {List.map((product) => (
         <Product
-          key={product.id}
-          id={product.id}
+          key={product._id}
+          id={product._id}
           title={product.title}
           price={product.price}
           description={product.description}
